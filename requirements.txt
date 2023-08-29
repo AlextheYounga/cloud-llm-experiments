@@ -1,0 +1,6 @@
+transformers
+datasets
+wandb
+torch
+peft
+tqdm
