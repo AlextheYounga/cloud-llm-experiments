@@ -39,7 +39,10 @@ class FineTune():
             model = GPT2LMHeadModel.from_pretrained(PRETRAINED_MODEL)
         else:
             # You may run into problems if your GPU has 16GB memory or less
-            tokenizer = AutoTokenizer.from_pretrained(PRETRAINED_MODEL)
+            tokenizer = AutoTokenizer.from_pretrained(config['tokenizer_name'], model_max_length=config['max_length'], use_fast=False)
+            # if no pad token, set it to eos
+            if tokenizer.pad_token is None:
+                tokenizer.pad_token = tokenizer.eos_token
             model = AutoModelForCausalLM.from_pretrained(PRETRAINED_MODEL)
 
         tokenizer.save_pretrained(TUNED_MODEL_SAVE_DIRECTORY)
